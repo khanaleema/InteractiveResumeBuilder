@@ -1,0 +1,184 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styling */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"],
+input[type="date"],
+textarea {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #007bff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+input[type="file"]:focus,
+input[type="date"]:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styling */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.submit-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+.add-button {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.add-button:hover {
+    background-color: #e0a800;
+}
+
+/* Profile Picture Styling */
+.profile-pic-container {
+    margin-top: 10px;
+}
+
+.profile-pic {
+    display: block;
+    max-width: 150px;
+    max-height: 150px;
+    border: 2px solid #007bff; /* Border around the profile picture */
+    object-fit: cover;
+}
+
+/* Resume Output Styling */
+.resume-output {
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resume-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 15px;
+}
+
+.resume-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.contact-info {
+    font-size: 16px;
+}
+
+.contact-info h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin: 0 0 10px;
+}
+
+.contact-info p {
+    margin: 5px 0;
+}
+
+.resume-section {
+    margin-bottom: 20px;
+}
+
+.resume-section h3 {
+    font-size: 20px;
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.resume-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.resume-section ul li {
+    background-color: #e9f5ff;
+    border: 1px solid #0056b3;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.resume-section ul li:hover {
+    background-color: #cce5ff;
+}
+
+/* General Output Styles */
+.resume-output p,
+.resume-output h3,
+.resume-output ul li {
+    color: #333;
+    font-family: Arial, sans-serif;
+}

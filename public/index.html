@@ -3,79 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Resume Builder</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <!-- Personal Information Section -->
-        <header>
-            <h1>Aleema Khan</h1>
-            <img src="../public/profile.jpg" alt="Profile Picture" class="profile-pic">
-            <section id="contact">
-                <h2>Contact Details</h2>
-                <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:khanaleema770@gmail.com">khanaleema770@gmail.com</a></p>
-                    <p><i class="fas fa-phone"></i> <strong>Phone:</strong> 03110205136</p>
-                    <p><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/aleema-khan-8649662bb/" target="_blank">linkedin.com/in/aleema-khan-8649662bb</a></p>
+        <form id="resume-form">
+            <h1>Resume Builder</h1>
+            <section id="contact-info">
+                <h2>Contact Information</h2>
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="tel" id="phone" placeholder="Phone" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <input type="file" id="profile-pic" accept="image/*" onchange="previewImage(event)">
+                <div class="profile-pic-container">
+                    <img id="profile-pic-preview" class="profile-pic" src="" alt="Profile Picture">
                 </div>
             </section>
-        </header>
-        
-        <!-- Education Section -->
-        <section id="education">
-            <h2>Education</h2>
-            <ul>
-                <li><strong>BOARD OF SECONDARY EDUCATION</strong>  <br>- Matriculation, 2022</li>
-                <li><strong>BOARD OF INTERMEDIATE EDUCATION</strong> <br> - Intermediate (In progress) <br> - FSc Pre-Engineering</li>
-            </ul>
-        </section>
-        
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2>Skills</h2>
-            <button id="toggleSkills">Show Skills</button>
-            <ul id="skillsList" class="hidden">
-                <li>Understanding of HTML/CSS for web development.</li>
-                <li>Proficiency in languages such as JavaScript, TypeScript, Python, Node.js: Intermediate</li>
-                <li>Expert in Adobe Creative Suite, including Photoshop, Illustrator, and InDesign, with strong skills in typography, color theory, and user-centered design principles.</li>
-                <li>Strong understanding of responsive design principles.</li>
-                <li>Understanding of typography principles and layout.</li>
-                <li>Knowledge of Adobe XD or Sketch for UI/UX design</li>
-            </ul>
-        </section>
-        
-        <!-- Work Experience Section -->
-        <section id="work-experience">
-            <h2>Work Experience</h2>
-            <div class="experience">
-                <h3>WEB DEVELOPER</h3>
-                <p><strong>Software House</strong><br>2023-2024</p>
-                <ul>
-                    <li>With a focus on web development, crafted interactive and user-centric websites using HTML, CSS, JavaScript, and TypeScript.</li>
-                    <li>Managed project and web strategic planning for entire team.</li>
-                    <li>Built reusable code to utilize for other projects and to minimize costs.</li>
-                    <li>Participated in pre-project analysis and technical assessments to validate creation of user-friendly interface.</li>
-                </ul>
-            </div>
-            <div class="experience">
-                <h3>GRAPHIC DESIGNER</h3>
-                <p><strong>Indeed</strong><br>2023-2024</p>
-                <ul>
-                    <li>Designed new, on-brand visual elements focusing on concept and messaging.</li>
-                    <li>Used Adobe InDesign to create images and layouts according to brief.</li>
-                    <li>Designed printed brochures, banners, and signs, aligning visual collateral with brand mission and values.</li>
-                    <li>Generated digital image files for use in digital and traditional printing methods.</li>
-                    <li>Created design packages to drive on-brand initiatives and increase sales.</li>
-                    <li>Worked with clients to define marketing and design vision for various graphic design projects.</li>
-                </ul>
-            </div>
-        </section>
-        
-        <script src="../typescript/scripts.js"></script>
+
+            <section id="education-section">
+                <h2>Education</h2>
+                <button type="button" onclick="addEducation()" class="add-button">Add Education</button>
+            </section>
+
+            <section id="work-section">
+                <h2>Work Experience</h2>
+                <button type="button" onclick="addWorkExperience()" class="add-button">Add Work Experience</button>
+            </section>
+
+            <section id="skills-section">
+                <h2>Skills</h2>
+                <button type="button" onclick="addSkill()" class="add-button">Add Skill</button>
+            </section>
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+
+        <div id="resume-output" class="resume-output"></div>
     </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <script src="scripts.js"></script>
+
+    <style>/* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Container Styling */
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Input Fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="file"],
+        input[type="date"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        input[type="file"]:focus,
+        input[type="date"]:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Button Styling */
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        
+        .submit-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+        
+        .submit-button:hover {
+            background-color: #218838;
+        }
+        
+        .add-button {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        
+        .add-button:hover {
+            background-color: #e0a800;
+        }
+        
+        /* Profile Picture Styling */
+        .profile-pic-container {
+            margin-top: 10px;
+        }
+        
+        .profile-pic {
+            display: block;
+            max-width: 150px;
+            max-height: 150px;
+            border: 2px solid #007bff; /* Border around the profile picture */
+            object-fit: cover;
+        }
+        
+        /* Resume Output Styling */
+        .resume-output {
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            margin-top: 30px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resume-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 15px;
+        }
+        
+        .resume-profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #007bff;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        
+        .contact-info {
+            font-size: 16px;
+        }
+        
+        .contact-info h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin: 0 0 10px;
+        }
+        
+        .contact-info p {
+            margin: 5px 0;
+        }
+        
+        .resume-section {
+            margin-bottom: 20px;
+        }
+        
+        .resume-section h3 {
+            font-size: 20px;
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .resume-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .resume-section ul li {
+            background-color: #e9f5ff;
+            border: 1px solid #0056b3;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        
+        .resume-section ul li:hover {
+            background-color: #cce5ff;
+        }
+        
+        /* General Output Styles */
+        .resume-output p,
+        .resume-output h3,
+        .resume-output ul li {
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        </style>
 </body>
 </html>
