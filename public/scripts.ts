@@ -1,3 +1,5 @@
+// scripts.ts
+
 const resumeForm = document.getElementById('resume-form') as HTMLFormElement;
 const resumeOutput = document.getElementById('resume-output') as HTMLDivElement;
 
@@ -36,88 +38,91 @@ resumeForm.addEventListener('submit', (event) => {
     const profilePic = (document.getElementById('profile-pic-preview') as HTMLImageElement).src;
 
     resumeOutput.innerHTML = `
-        <h2>${name}'s Resume</h2>
-        <img src="${profilePic}" alt="Profile Picture" class="profile-pic"/>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Address:</strong> ${address}</p>
-
-        <h3>Education</h3>
-        ${educationData.map(data => `
-            <div class="resume-entry">
-                <p><strong>Institution:</strong> ${data.institution}</p>
-                <p><strong>Degree:</strong> ${data.degree}</p>
-                <p><strong>Start Date:</strong> ${data.startDate}</p>
-                <p><strong>End Date:</strong> ${data.endDate}</p>
+        <div class="resume-header">
+            <div class="resume-profile-pic-box">
+                <img src="${profilePic}" alt="Profile Picture" class="resume-profile-pic">
             </div>
-        `).join('')}
-
-        <h3>Work Experience</h3>
-        ${workData.map(data => `
-            <div class="resume-entry">
-                <p><strong>Company:</strong> ${data.company}</p>
-                <p><strong>Position:</strong> ${data.position}</p>
-                <p><strong>Start Date:</strong> ${data.startDate}</p>
-                <p><strong>End Date:</strong> ${data.endDate}</p>
+            <div class="contact-info">
+                <h2>${name}</h2>
+                <p>Email: ${email}</p>
+                <p>Phone: ${phone}</p>
+                <p>Address: ${address}</p>
             </div>
-        `).join('')}
-
-        <h3>Skills</h3>
-        ${skillData.map(data => `
-            <div class="resume-entry">
-                <p><strong>Skill:</strong> ${data.skill}</p>
-            </div>
-        `).join('')}
+        </div>
+        <div class="resume-section">
+            <h3>Education</h3>
+            <ul>
+                ${educationData.map(ed => `
+                    <li><strong>${ed.institution}</strong> - ${ed.degree}<br>From ${ed.startDate} to ${ed.endDate}</li>
+                `).join('')}
+            </ul>
+        </div>
+        <div class="resume-section">
+            <h3>Work Experience</h3>
+            <ul>
+                ${workData.map(work => `
+                    <li><strong>${work.company}</strong> - ${work.position}<br>From ${work.startDate} to ${work.endDate}</li>
+                `).join('')}
+            </ul>
+        </div>
+        <div class="resume-section">
+            <h3>Skills</h3>
+            <ul>
+                ${skillData.map(skill => `
+                    <li>${skill.skill}</li>
+                `).join('')}
+            </ul>
+        </div>
     `;
 });
 
-function previewImage(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const preview = document.getElementById('profile-pic-preview') as HTMLImageElement;
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target!.result as string;
-            preview.style.display = 'block';
-        }
-        reader.readAsDataURL(input.files[0]);
-    } else {
-        preview.style.display = 'none';
-    }
-}
-
 function addEducation() {
-    const educationSection = document.getElementById('education-section') as HTMLDivElement;
-    const newEducation = document.createElement('div');
-    newEducation.classList.add('education-entry');
-    newEducation.innerHTML = `
+    const section = document.getElementById('education-section');
+    const educationEntry = document.createElement('div');
+    educationEntry.className = 'education-entry';
+    educationEntry.innerHTML = `
         <input type="text" name="institution" placeholder="Institution" required>
         <input type="text" name="degree" placeholder="Degree" required>
         <input type="date" name="edu-start" placeholder="Start Date" required>
-        <input type="date" name="edu-end" placeholder="End Date">
+        <input type="date" name="edu-end" placeholder="End Date" required>
     `;
-    educationSection.appendChild(newEducation);
+    section?.appendChild(educationEntry);
 }
 
 function addWorkExperience() {
-    const workSection = document.getElementById('work-section') as HTMLDivElement;
-    const newWork = document.createElement('div');
-    newWork.classList.add('work-entry');
-    newWork.innerHTML = `
+    const section = document.getElementById('work-section');
+    const workEntry = document.createElement('div');
+    workEntry.className = 'work-entry';
+    workEntry.innerHTML = `
         <input type="text" name="company" placeholder="Company" required>
         <input type="text" name="position" placeholder="Position" required>
         <input type="date" name="work-start" placeholder="Start Date" required>
-        <input type="date" name="work-end" placeholder="End Date">
+        <input type="date" name="work-end" placeholder="End Date" required>
     `;
-    workSection.appendChild(newWork);
+    section?.appendChild(workEntry);
 }
 
 function addSkill() {
-    const skillsSection = document.getElementById('skills-section') as HTMLDivElement;
-    const newSkill = document.createElement('div');
-    newSkill.classList.add('skill-entry');
-    newSkill.innerHTML = `
+    const section = document.getElementById('skills-section');
+    const skillEntry = document.createElement('div');
+    skillEntry.className = 'skill-entry';
+    skillEntry.innerHTML = `
         <input type="text" name="skill" placeholder="Skill" required>
     `;
-    skillsSection.appendChild(newSkill);
+    section?.appendChild(skillEntry);
+}
+
+function previewImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.getElementById('profile-pic-preview') as HTMLImageElement;
+            if (e.target?.result) {
+                img.src = e.target.result as string;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
 }
